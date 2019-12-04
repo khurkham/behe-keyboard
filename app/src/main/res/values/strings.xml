@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BeHe Keyboard</string>
     <string name="subtype_generic">%s</string>
-    <string name="welcome">Welcome to BeHe!</string>
-    <string name="activate">Please click the enable button below to navigate to keyboard settings. Find BeHe Keyboard in the list and enable it. A warning dialog will appear, click ok. BeHe Keyboard does NOT collect any data. Then, navigate back and click the select button below and choose BeHe Keyboard from the list. After that you can test the keyboard using the text field below. To open the settings, tap the button below and click on BeHe Keyboard.  \n\nSpecial thanks to Matt and Thomas for donating!</string>
+    <string name="welcome"> Welcome to BeHe!</string>
+    <string name="activate">Sheeeeet Please click (whatever my mans) the enable button below to navigate to keyboard settings. Find BeHe Keyboard in the list and enable it. A warning dialog will appear, click ok. BeHe Keyboard does NOT collect any data. Then, navigate back and click the select button below and choose BeHe Keyboard from the list. After that you can test the keyboard using the text field below. To open the settings, tap the button below and click on BeHe Keyboard.  \n\nSpecial thanks to Matt and Thomas for donating!</string>
     <string name="donate">If you like the app, please consider supporting me. Thanks!</string>
     <string name="up">Stay up to date</string>
     <string name="follow">Follow me on Twitter to find news about my apps. @VlathXDA</string>
@@ -64,4 +64,5 @@
         <item name="3">3</item>
     </string-array>
     <string name="word_separators" translatable="false">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    <string name="test_your_keyboard_here">Test your keyboard here</string>
 </resources>

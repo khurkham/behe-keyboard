@@ -1,84 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
-    <Button
-        android:id="@+id/enable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/settings"
-        android:layout_alignBottom="@+id/settings"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_marginEnd="37dp"
-        android:onClick="enable"
-        android:text="Enable" />
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="6dp"
 
-    <Button
-        android:id="@+id/select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/enable"
-        android:layout_alignBottom="@+id/enable"
-        android:layout_centerHorizontal="true"
-        android:onClick="select"
-        android:text="Select" />
+        />
 
-    <Button
-        android:id="@+id/settings"
-        android:onClick="settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="37dp"
-        android:text="Settings" />
-
-
-    <EditText
-        android:id="@+id/editText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/custom_end_icon"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/settings"
-        android:layout_marginTop="17dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
         android:hint="Test your keyboard here"
-        android:inputType="textPersonName" />
+        app:boxStrokeColor="@color/colorAccent"
+        app:endIconCheckable="true"
+        app:endIconDrawable="@android:drawable/ic_input_add"
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="19dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/activate" />
+        app:endIconMode="custom"
+        app:endIconTint="@color/colorPrimaryDark"
+        app:hintTextColor="@color/white">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_below="@+id/editText"
-        android:layout_marginTop="19dp"
-        android:text="@string/license" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/select"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="12dp"
-        android:text="@string/version"
-        android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-</RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryDark"
+        app:elevation="10dp"
+        app:itemIconTint="@drawable/nav_colors"
+        app:itemTextColor="@drawable/nav_colors"
+        app:menu="@menu/menu_items" />
+
+
+</FrameLayout>

@@ -1,3 +1,6 @@
+/*Copyright (C) 2017-2019 Vlad Todosin */
+
+
 package com.vlath.keyboard;
 
 import android.content.Context;
@@ -9,11 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -41,42 +45,22 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!getPresentationShown()) {
+        if (!getPresentationShown()) {
 
-            // Checking for first time launch - before calling setContentView()
-
-
-            // Making notification bar transparent
             if (Build.VERSION.SDK_INT >= 21) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                getWindow().getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             }
-
 
             setContentView(R.layout.main);
             getSupportActionBar().hide();
-
             viewPager = (ViewPager) findViewById(R.id.view_pager);
             dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
             btnSkip = (Button) findViewById(R.id.btn_skip);
             btnNext = (Button) findViewById(R.id.btn_next);
-
-
-            // layouts of all welcome sliders
-            // add few more layouts if you want
-            layouts = new int[]{
-                    R.layout.slide1,
-                    R.layout.slide2,
-                    R.layout.slide3,
-                    R.layout.slide4
-            };
-
-
-            // adding bottom dots
+            layouts = new int[] { R.layout.slide1, R.layout.slide2, R.layout.slide3, R.layout.slide4 };
             addBottomDots(0);
-
-            // making notification bar transparent
             changeStatusBarColor();
-
             myViewPagerAdapter = new MyViewPagerAdapter();
             viewPager.setAdapter(myViewPagerAdapter);
             viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
@@ -106,19 +90,23 @@ public class Main extends AppCompatActivity {
             });
         }
 
-        else{
+        else {
 
             setContentView(R.layout.activate);
-            TextView t2 = (TextView) findViewById(R.id.textView2);
-            t2.setMovementMethod(LinkMovementMethod.getInstance());
 
+            //TextView t2 = (TextView) findViewById(R.id.textView2);
+           // t2.setMovementMethod(LinkMovementMethod.getInstance());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.BLACK);
+            }
+            setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
             showTwitterDialog();
 
         }
 
-
     }
-
 
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
@@ -150,7 +138,7 @@ public class Main extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    //  viewpager change listener
+    // viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -191,7 +179,7 @@ public class Main extends AppCompatActivity {
         }
     }
 
-    private void normalStatusBar(){
+    private void normalStatusBar() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -230,7 +218,6 @@ public class Main extends AppCompatActivity {
             return view == obj;
         }
 
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
@@ -238,29 +225,27 @@ public class Main extends AppCompatActivity {
         }
     }
 
-    public boolean getPresentationShown(){
+    public boolean getPresentationShown() {
 
         try {
             return PreferenceManager.getDefaultSharedPreferences(this).getBoolean("presentation", false);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
             return false;
         }
 
     }
 
-    public void setPresentationShown(){
+    public void setPresentationShown() {
 
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("presentation", true).commit();
 
     }
 
-    public void showTwitterDialog(){
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("shown",false)) {}
-        else {
-            AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.up))
+    public void showTwitterDialog() {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("shown", false)) {
+        } else {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(getString(R.string.up))
                     .setMessage(getString(R.string.follow))
                     .setPositiveButton("Follow", new DialogInterface.OnClickListener() {
                         @Override
@@ -268,41 +253,33 @@ public class Main extends AppCompatActivity {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/VlathXDA"));
                             startActivity(intent);
                         }
-                    })
-                    .setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                         }
-                    })
-                    .show();
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("shown",true).apply();
+                    }).show();
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("shown", true).apply();
         }
     }
 
-
-
-    public void settings(View v){
+    public void settings(View v) {
         Intent intent = new Intent(this, Preference.class);
         startActivity(intent);
     }
 
-    public void enable(View v){
+    public void enable(View v) {
         this.startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS));
     }
 
-    public void select(View v){
-        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+    public void select(View v) {
+        InputMethodManager imeManager = (InputMethodManager) getApplicationContext()
+                .getSystemService(INPUT_METHOD_SERVICE);
         if (imeManager != null) {
             imeManager.showInputMethodPicker();
         } else {
-            Toast.makeText(this, "Not possible" , Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Not possible", Toast.LENGTH_LONG).show();
         }
     }
-
-
-
-
-
 
 }

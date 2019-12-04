@@ -4,12 +4,12 @@ android {
      lintOptions {
           abortOnError false
     }
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.vlath.keyboard"
         minSdkVersion 18
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 112
         versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,7 +20,17 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
     }
+}
+
+task appStart(type: Exec, dependsOn: 'installDebug') {
+    // linux 
+    commandLine 'adb', 'shell', 'am', 'start', '-n', 'com.vlath.keyboard.debug/com.vlath.keyboard.Main'   
 }
 
 dependencies {
@@ -28,6 +38,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+    implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.github.marcoscgdev:EasyAbout:1.0.6'
 }
