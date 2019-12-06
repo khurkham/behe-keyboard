@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimaryDark"
-        android:elevation="6dp"
-
-        />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/custom_end_icon"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"

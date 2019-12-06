@@ -13,26 +13,32 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Main extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class Main extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemReselectedListener{
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -53,12 +59,12 @@ public class Main extends AppCompatActivity {
             }
 
             setContentView(R.layout.main);
-            getSupportActionBar().hide();
+            //getSupportActionBar().hide();
             viewPager = (ViewPager) findViewById(R.id.view_pager);
             dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
             btnSkip = (Button) findViewById(R.id.btn_skip);
             btnNext = (Button) findViewById(R.id.btn_next);
-            layouts = new int[] { R.layout.slide1, R.layout.slide2, R.layout.slide3, R.layout.slide4 };
+            layouts = new int[]{R.layout.slide1, R.layout.slide2, R.layout.slide3, R.layout.slide4};
             addBottomDots(0);
             changeStatusBarColor();
             myViewPagerAdapter = new MyViewPagerAdapter();
@@ -88,21 +94,31 @@ public class Main extends AppCompatActivity {
                     }
                 }
             });
-        }
-
-        else {
+        } else {
 
             setContentView(R.layout.activate);
 
             //TextView t2 = (TextView) findViewById(R.id.textView2);
-           // t2.setMovementMethod(LinkMovementMethod.getInstance());
+            // t2.setMovementMethod(LinkMovementMethod.getInstance());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(Color.BLACK);
             }
-            setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
+            setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+            Fragment newFragment = new MainFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, newFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+            setTitle("Behe Keyboard");
+
+            BottomNavigationView mNavView = findViewById(R.id.bottom_navigation);
+            mNavView.setOnNavigationItemReselectedListener(this);
             showTwitterDialog();
+
 
         }
 
@@ -189,9 +205,31 @@ public class Main extends AppCompatActivity {
 
     }
 
-    /**
-     * View pager adapter
-     */
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                Fragment mFragment = new MainFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, mFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case R.id.settings:
+                break;
+
+            case R.id.about:
+
+                Fragment newFragment = new AboutFragment();
+                FragmentTransaction mtransaction = getSupportFragmentManager().beginTransaction();
+                mtransaction.replace(R.id.fragmentContainer, newFragment);
+                mtransaction.addToBackStack(null);
+                mtransaction.commit();
+                break;
+        }
+    }
+
+
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
 

@@ -1,4 +1,4 @@
-/** Copyright (C) 2019 Vlad Todosin */
+/* Copyright (C) 2019 Vlad Todosin */
 
 package com.vlath.keyboard;
 

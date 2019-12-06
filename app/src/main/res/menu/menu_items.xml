@@ -1,13 +1,13 @@
  <menu xmlns:android="http://schemas.android.com/apk/res/android">
-     <item android:id="@+id/action_search"
+     <item android:id="@+id/home"
           android:title="Hello"
           android:icon="@drawable/ic_backspace"
           />
-     <item android:id="@+id/action_settings"
+     <item android:id="@+id/settings"
           android:title="Hello"
           android:icon="@drawable/ic_backspace"
            />
-     <item android:id="@+id/action_navigation"
+     <item android:id="@+id/about"
           android:title="SAl"
           android:icon="@drawable/ic_backspace"
            />
