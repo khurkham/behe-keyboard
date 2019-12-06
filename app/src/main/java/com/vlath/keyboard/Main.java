@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Main extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemReselectedListener{
+public class Main extends AppCompatActivity implements  BottomNavigationView.OnNavigationItemSelectedListener{
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -116,7 +117,7 @@ public class Main extends AppCompatActivity implements  BottomNavigationView.OnN
             setTitle("Behe Keyboard");
 
             BottomNavigationView mNavView = findViewById(R.id.bottom_navigation);
-            mNavView.setOnNavigationItemReselectedListener(this);
+            mNavView.setOnNavigationItemSelectedListener(this);
             showTwitterDialog();
 
 
@@ -206,7 +207,7 @@ public class Main extends AppCompatActivity implements  BottomNavigationView.OnN
     }
 
     @Override
-    public void onNavigationItemReselected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
                 Fragment mFragment = new MainFragment();
@@ -225,8 +226,11 @@ public class Main extends AppCompatActivity implements  BottomNavigationView.OnN
                 mtransaction.replace(R.id.fragmentContainer, newFragment);
                 mtransaction.addToBackStack(null);
                 mtransaction.commit();
+
+                Log.d("Nav:", "pressed About");
                 break;
         }
+        return true;
     }
 
 
